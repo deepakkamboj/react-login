@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import dcLight from '../assets/devchallenges-light.svg';
-import dc from '../assets/devchallenges.svg';
+import logo from '../assets/softleo-logo.png';
+import logoLight from '../assets/softleo-logo-light.png';
 import { UserContext } from '../contexts/UserContext';
 import { emailSignUp } from '../firebase';
 import OAuth from '../components/OAuth';
@@ -30,7 +30,11 @@ export default function SignUp() {
         id="form-header"
         className="flex flex-col gap-4"
       >
-      <p>Softleo</p>
+        <img
+          src={darkMode ? logoLight : logo}
+          alt="devchallenges logo"
+          className="mb-4 max-w-[120px]"
+        />
         <p className="text-xl font-bold">Join thousands of learners from around the world</p>
         <p>
           Master web development by making real-life projects. There are multiple paths for you to

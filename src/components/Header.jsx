@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { func } from 'prop-types';
-import dcLight from '../assets/devchallenges-light.svg';
-import dc from '../assets/devchallenges.svg';
+import logo from '../assets/softleo-logo.png';
+import logoLight from '../assets/softleo-logo-light.png';
 import { UserContext } from '../contexts/UserContext';
 import { firebaseSignOut } from '../firebase';
 
@@ -90,8 +90,8 @@ export default function Header() {
   return (
     <header className="sticky flex w-full justify-between px-12 py-8">
       <Link to="/">
-        <img
-          src={darkMode ? dcLight : dc}
+      <img
+          src={darkMode ? logoLight : logo}
           alt="devchallenges logo"
           className="mb-4 max-w-[120px]"
         />
