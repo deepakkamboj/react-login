@@ -52,6 +52,31 @@ export async function emailSignIn({ email, password }) {
   }
 }
 
+// Helper function to fetch emails from GitHub API
+async function fetchGithubEmails(accessToken) {
+  try {
+    const response = await fetch('https://api.github.com/user/emails', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API returned error: ${response.statusText}`);
+    }
+
+    const emails = await response.json();
+
+    // Filter the primary email or public email
+    return emails
+      .filter((emailEntry) => emailEntry.primary)
+      .map((emailEntry) => emailEntry.email);
+  } catch (error) {
+    console.error('Error fetching emails from GitHub:', error);
+    return [];
+  }
+}
+
 export async function oAuthSignIn(provider) {
   try {
     if (provider instanceof GithubAuthProvider) {
@@ -78,11 +103,24 @@ export async function oAuthSignIn(provider) {
     console.log('User ID:', user.uid);
     console.log('Display Name:', user.displayName);
     console.log('Profile Picture:', user.photoURL);
-    console.log('OAuth Access Token:', credential.accessToken);
+
+    if (credential) {
+      console.log('OAuth Access Token:', credential.accessToken);
+    } else {
+      console.warn('No OAuth Access Token returned from provider.');
+    }
 
     // Try to fetch the email (GitHub might return multiple emails)
     if (user.email) {
       console.log('User Email:', user.email);
+    } else if (provider instanceof GithubAuthProvider && credential?.accessToken) {
+      // Make an API call to GitHub to fetch the user's private/public email addresses
+      const emails = await fetchGithubEmails(credential.accessToken);
+      if (emails && emails.length > 0) {
+        console.log('GitHub User Emails:', emails);
+      } else {
+        console.warn('No email addresses found from GitHub API.');
+      }
     } else {
       // GitHub-specific: if email is not in the `user` object, check additional info
       // eslint-disable-next-line no-lonely-if
@@ -109,6 +147,7 @@ export async function oAuthSignIn(provider) {
     }
   }
 }
+
 export async function firebaseSignOut() {
   try {
     await signOut(auth);
