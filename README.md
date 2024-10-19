@@ -1,19 +1,19 @@
-React Authentication App
-========================
+# React Authentication / Login App
 
 ![React Badge](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white&style=for-the-badge) ![TypeScript Badge](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=for-the-badge) ![Firebase Badge](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=white&style=for-the-badge)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8bd0dcc6-a0a8-4cde-9641-479145087e5e/deploy-status)](https://app.netlify.com/sites/deepakkamboj-react-login/deploys)
 
-Solution for a challenge from [Devchallenges.io](http://devchallenges.io).
+This is a React-based login application using Firebase for social login with GitHub, Facebook, and Google. This is a
+solution for a challenge from [Softleo LLC](https://www.softleo.com).
 
-### [Demo](https://dc-auth-app.web.app/) | [Solution](https://devchallenges.io/solutions/G4Vgosyz8Xi1BHjk2fhs) | [Challenge](https://devchallenges.io/challenges/N1fvBjQfhlkctmwj1tnw)
-
+### [Demo](https://deepakkamboj-react-login.netlify.app/) | [Solution](https://www.softleo.com/solutions/G4Vgosyz8Xi1BHjk2fhs) | [Challenge](https://www.softleo.com/challenges/N1fvBjQfhlkctmwj1tnw)
 
 <!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
 
-- [React Authentication App](#react-authentication-app)
-    - [Demo | Solution | Challenge](#demo--solution--challenge)
+- [React Authentication / Login App](#react-authentication--login-app)
+  - [Demo | Solution | Challenge](#demo--solution--challenge)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
     - [Built With](#built-with)
@@ -24,8 +24,8 @@ Solution for a challenge from [Devchallenges.io](http://devchallenges.io).
 <!-- OVERVIEW -->
 
 ## Overview
-This is a React-based login application using Firebase for social login with GitHub, Facebook, and Google.
 
+This is a React-based login application using Firebase for social login with GitHub, Facebook, and Google.
 
 ![screenshot](./screenshot.jpg)
 
@@ -41,7 +41,7 @@ This is a React-based login application using Firebase for social login with Git
 
 <!-- List the features of your application or follow the template. Don't share the figma file here :) -->
 
-This application/site was created as a submission to a [DevChallenges](https://devchallenges.io/challenges) challenge. The [challenge](https://devchallenges.io/challenges/N1fvBjQfhlkctmwj1tnw) was to build an application to complete the given user storie.
+This application/site was created as a submission to a [DevChallenges](https://www.softleo.com/challenges) challenge. The [challenge](https://www.softleo.com/challenges/N1fvBjQfhlkctmwj1tnw) was to build an application to complete the given user storie.
 
 - I can register a new account
 - I can log in
