@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import {
   fetchSignInMethodsForEmail,
   getAuth,
+  GithubAuthProvider,
   signInWithPopup,
   signOut,
   createUserWithEmailAndPassword,
@@ -53,34 +54,61 @@ export async function emailSignIn({ email, password }) {
 
 export async function oAuthSignIn(provider) {
   try {
+    if (provider instanceof GithubAuthProvider) {
+      // Add the email scope explicitly for GitHub provider
+      provider.addScope('user:email');
+    }
+
     // Attempt to sign in with the provider
     const result = await signInWithPopup(auth, provider);
-    // Handle the sign-in result
-    // ...
+
+    // Check if result is defined
+    if (!result) {
+      console.error('Sign-in result is undefined or null.');
+      return;
+    }
+
+    // Extract the user details from the result
+    const { credential } = result;
+    const { user } = result;
+    const { additionalUserInfo } = result;
+
+    // Log the results for better instrumentation
+    console.log('OAuth login successful!');
+    console.log('User ID:', user.uid);
+    console.log('Display Name:', user.displayName);
+    console.log('Profile Picture:', user.photoURL);
+    console.log('OAuth Access Token:', credential.accessToken);
+
+    // Try to fetch the email (GitHub might return multiple emails)
+    if (user.email) {
+      console.log('User Email:', user.email);
+    } else {
+      // GitHub-specific: if email is not in the `user` object, check additional info
+      // eslint-disable-next-line no-lonely-if
+      if (additionalUserInfo.profile?.email) {
+        console.log('GitHub User Email:', additionalUserInfo.profile.email);
+      } else {
+        console.warn('No email returned from provider.');
+      }
+    }
   } catch (error) {
-    console.error(`Error occurred in oAuthSignIn method for provider ${provider}, : ${error.message}\nStack Trace: ${error.stack}`);
+    console.error(`Error occurred in oAuthSignIn method for provider ${provider.constructor.name}: ${error.message}\nStack Trace: ${error.stack}`);
+
     if (error.code === 'auth/account-exists-with-different-credential') {
-      // Fetch the list of sign-in methods for the conflicting email
       const { email } = error.customData;
       const methods = await fetchSignInMethodsForEmail(auth, email);
 
-      // Check if methods array is empty
       if (methods.length === 0) {
         console.error('No associated sign-in methods found for this email.');
       } else {
-        // Inform the user they should use another sign-in method
         console.error(`Please sign in using one of the following methods: ${methods.join(', ')}`);
       }
-
-      // Optionally, offer to link the accounts
-      // This part depends on your application's flow and user experience
     } else {
-      // Handle other errors
-      console.error(error);
+      console.error('Error during OAuth login:', error);
     }
   }
 }
-
 export async function firebaseSignOut() {
   try {
     await signOut(auth);
