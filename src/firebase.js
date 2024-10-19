@@ -58,20 +58,20 @@ export async function oAuthSignIn(provider) {
     // Handle the sign-in result
     // ...
   } catch (error) {
+    console.error(`Error occurred in oAuthSignIn method for provider ${provider}, : ${error.message}\nStack Trace: ${error.stack}`);
     if (error.code === 'auth/account-exists-with-different-credential') {
       // Fetch the list of sign-in methods for the conflicting email
-      const {email} = error.customData;
+      const { email } = error.customData;
       const methods = await fetchSignInMethodsForEmail(auth, email);
-      
-       // Check if methods array is empty
-       if (methods.length === 0) {
+
+      // Check if methods array is empty
+      if (methods.length === 0) {
         console.error('No associated sign-in methods found for this email.');
       } else {
         // Inform the user they should use another sign-in method
         console.error(`Please sign in using one of the following methods: ${methods.join(', ')}`);
       }
-      
-      
+
       // Optionally, offer to link the accounts
       // This part depends on your application's flow and user experience
     } else {
