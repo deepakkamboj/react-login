@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+@layer components {
+  .btn-primary {
+    @apply rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-400 active:bg-blue-500;
+  }
+  .btn-secondary {
+    @apply rounded dark:outline-slate-700 px-4 py-2 text-white hover:bg-blue-500/10 dark:hover:bg-white/10 active:bg-blue-500/30;
+  }
+}
